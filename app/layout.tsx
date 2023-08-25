@@ -1,7 +1,8 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import Sidebar from "./components/layout/Sidebar";
+import Sidebar from "./components/sidebar/Sidebar";
+import Followbar from "./components/followbar/Followbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,14 +25,14 @@ export default function RootLayout({
             <div
               className="
                 col-span-3
-                border-x-[1px]
+                border-x
                 border-neutral-800
                 lg:col-span-2
               "
             >
               {children}
             </div>
-            <div className="text-sky-500">followbar</div>
+            <Followbar />
             <div className="text-sky-500">section 4</div>
           </div>
         </div>

@@ -1,8 +1,6 @@
 import { useRouter } from "next/navigation";
 import { FaFeather } from "react-icons/fa";
 
-interface SidebarTweetButtonProps {}
-
 const SidebarTweetButton = () => {
   const router = useRouter();
 
@@ -30,21 +28,21 @@ const SidebarTweetButton = () => {
       {/* Desktop */}
       <div
         className="
+          mt-6
           hidden
-          lg:mt-6
+          cursor-pointer
+          rounded-full
+          bg-sky-500
+          px-4
+          py-2
+          transition
+          hover:bg-opacity-90
           lg:block
-          lg:cursor-pointer
-          lg:rounded-full
-          lg:bg-sky-500
-          lg:px-4
-          lg:py-2
-          lg:transition
-          lg:hover:bg-opacity-90
         "
       >
-        <p className="
-        
-        ">Tweet</p>
+        <p className="text-center text-[20px] font-semibold text-white">
+          Tweet
+        </p>
       </div>
     </div>
   );
