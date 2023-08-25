@@ -35,6 +35,7 @@ const SidebarTweetButton = () => {
       </div>
       {/* Desktop */}
       <div
+        onClick={onClick}
         className="
           mt-6
           hidden
