@@ -1,6 +1,5 @@
 "use client";
 import { useCallback } from "react";
-import { createPortal } from "react-dom";
 
 import { AiOutlineClose } from "react-icons/ai";
 import Button from "./Button";
@@ -42,7 +41,7 @@ const Modal = ({
     return null;
   }
 
-  return createPortal(
+  return (
     <>
       <div
         className="
@@ -132,8 +131,7 @@ const Modal = ({
           </div>
         </div>
       </div>
-    </>,
-    document.body as HTMLElement
+    </>
   );
 };
 
