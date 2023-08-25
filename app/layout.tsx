@@ -1,9 +1,11 @@
+"use client";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Sidebar from "./components/sidebar/Sidebar";
 import Followbar from "./components/followbar/Followbar";
 import Modal from "./components/Modal";
+import ClientOnly from "./components/ClientOnly";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,9 +21,18 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <Modal />
       <body className={inter.className}>
-        <div className="container mx-auto h-full max-w-6xl xl:px-32">
+        <ClientOnly>
+          <Modal
+            isOpen={true}
+            onClose={() => {}}
+            onSubmit={() => {}}
+            title="Modal"
+            actionLabel="Submit"
+          />
+        </ClientOnly>
+
+        <main className="container mx-auto h-full max-w-6xl xl:px-32">
           <div className="grid h-full grid-cols-4">
             <Sidebar />
             <div
@@ -37,7 +48,7 @@ export default function RootLayout({
             <Followbar />
             <div className="text-sky-500">section 4</div>
           </div>
-        </div>
+        </main>
       </body>
     </html>
   );
