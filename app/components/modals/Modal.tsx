@@ -3,7 +3,8 @@ import { useCallback } from "react";
 import { createPortal } from "react-dom";
 
 import { AiOutlineClose } from "react-icons/ai";
-import Button from "./Button";
+
+import Button from "../Button";
 
 interface ModalProps {
   isOpen: boolean;
@@ -78,7 +79,7 @@ const Modal = ({
             className="
               relative
               flex
-              h-full
+              min-h-full
               w-full
               flex-col
               rounded-lg
