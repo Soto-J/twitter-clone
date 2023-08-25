@@ -1,4 +1,5 @@
 import React from "react";
+import Button from "../Button";
 
 const Followbar = () => {
   return (
@@ -7,7 +8,7 @@ const Followbar = () => {
         <h2 className="text-xl font-bold text-white">Who to follow</h2>
         <div className="mt-4 flex flex-col gap-6">
           {/* TODO USER LIST */}
-          Followbar
+          <Button label="Follow" />
         </div>
       </div>
     </div>

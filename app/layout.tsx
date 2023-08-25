@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Sidebar from "./components/sidebar/Sidebar";
 import Followbar from "./components/followbar/Followbar";
+import Modal from "./components/Modal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,8 +19,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <Modal />
       <body className={inter.className}>
-        <div className="xl:px-30 container mx-auto h-full max-w-6xl">
+        <div className="container mx-auto h-full max-w-6xl xl:px-32">
           <div className="grid h-full grid-cols-4">
             <Sidebar />
             <div
