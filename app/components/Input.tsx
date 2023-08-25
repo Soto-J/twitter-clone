@@ -15,6 +15,7 @@ const Input = ({
 }: InputProps) => {
   return (
     <input
+      placeholder={placeholder}
       disabled={disabled}
       value={value}
       type={type}
