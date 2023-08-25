@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ClientOnly>
+        {/* <ClientOnly>
           <Modal
             isOpen={false}
             onClose={() => {}}
@@ -31,7 +31,7 @@ export default function RootLayout({
             title="Modal"
             actionLabel="Submit"
           />
-        </ClientOnly>
+        </ClientOnly> */}
 
         <main className="container mx-auto h-full max-w-6xl xl:px-32">
           <div className="grid h-full grid-cols-4">
