@@ -2,6 +2,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+
 import Sidebar from "./components/sidebar/Sidebar";
 import Followbar from "./components/followbar/Followbar";
 import Modal from "./components/Modal";
@@ -24,7 +25,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <ClientOnly>
           <Modal
-            isOpen={true}
+            isOpen={false}
             onClose={() => {}}
             onSubmit={() => {}}
             title="Modal"
