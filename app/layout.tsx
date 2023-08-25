@@ -1,4 +1,3 @@
-"use client";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -7,6 +6,7 @@ import Sidebar from "./components/sidebar/Sidebar";
 import Followbar from "./components/followbar/Followbar";
 import Modal from "./components/Modal";
 import ClientOnly from "./components/ClientOnly";
+import LoginModal from "./components/modals/LoginModal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -20,18 +20,16 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const onSubmit = () => {
+    "use client";
+  };
+
   return (
     <html lang="en">
       <body className={inter.className}>
-        {/* <ClientOnly>
-          <Modal
-            isOpen={false}
-            onClose={() => {}}
-            onSubmit={() => {}}
-            title="Modal"
-            actionLabel="Submit"
-          />
-        </ClientOnly> */}
+        <ClientOnly>
+          <LoginModal />
+        </ClientOnly>
 
         <main className="container mx-auto h-full max-w-6xl xl:px-32">
           <div className="grid h-full grid-cols-4">
