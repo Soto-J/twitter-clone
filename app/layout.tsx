@@ -20,10 +20,6 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const onSubmit = () => {
-    "use client";
-  };
-
   return (
     <html lang="en">
       <body className={inter.className}>
