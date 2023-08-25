@@ -20,7 +20,7 @@ const LoginModal = () => {
 
     loginModal.onClose();
     registerModal.onOpen();
-  }, [isLoading, loginModal.onClose, registerModal.onOpen]);
+  }, [isLoading, loginModal, registerModal]);
 
   const onSubmit = useCallback(async () => {
     try {
@@ -33,7 +33,7 @@ const LoginModal = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [loginModal.onClose]);
+  }, [loginModal]);
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
