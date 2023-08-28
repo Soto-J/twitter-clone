@@ -7,7 +7,14 @@ interface InputProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input = ({ id, label, disabled, type, value, onChange }: InputProps) => {
+const Input = ({
+  id,
+  label,
+  disabled,
+  type = "text",
+  value,
+  onChange,
+}: InputProps) => {
   return (
     <input
       id={id}
