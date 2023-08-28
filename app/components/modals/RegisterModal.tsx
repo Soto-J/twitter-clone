@@ -1,6 +1,8 @@
 "use client";
 import { useCallback, useState } from "react";
 
+import axios from "axios";
+import { toast } from "react-hot-toast/headless";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
 import useLoginModal from "@/app/hooks/useLoginModal";
 
@@ -24,42 +26,60 @@ const RegisterModal = () => {
     loginModal.onOpen();
   }, [isLoading, registerModal, loginModal]);
 
-  const onSubmit = useCallback(async () => {
-    try {
-      setIsLoading(true);
+  const onSubmit = async () => {
+    setIsLoading(true);
+    console.log(name, email, username, password);
 
-      // todo: register
-      registerModal.onClose();
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [registerModal.onClose]);
+    axios
+      .post("/api/auth/register", {
+        name,
+        email,
+        username,
+        password,
+      })
+      .then(() => {
+        toast.success("Account created successfully");
+        registerModal.onClose();
+      })
+      .catch((error) => {
+        toast.error(error.response.data.message);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
 
   const bodyContent = (
-    <div className="flex flex-col gap-4">
+    <form className="flex flex-col gap-4">
       <Input
-        placeholder="Email"
+        id="email"
+        label="Email"
         disabled={isLoading}
+        value={email}
         onChange={(e) => setEmail(e.target.value)}
       />
       <Input
-        placeholder="Name"
+        id="name"
+        label="Name"
         disabled={isLoading}
+        value={name}
         onChange={(e) => setName(e.target.value)}
       />
       <Input
-        placeholder="Username"
+        id="username"
+        label="Username"
         disabled={isLoading}
+        value={username}
         onChange={(e) => setUsername(e.target.value)}
       />
       <Input
-        placeholder="Password"
+        id="password"
+        label="Password"
         disabled={isLoading}
+        value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-    </div>
+    </form>
   );
 
   const footerContent = (

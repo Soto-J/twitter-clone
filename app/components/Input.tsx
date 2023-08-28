@@ -1,24 +1,20 @@
 interface InputProps {
-  placeholder: string;
-  value?: string;
-  disabled?: boolean;
+  id: string;
+  label: string;
   type?: string;
+  disabled?: boolean;
+  value: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input = ({
-  placeholder,
-  value,
-  disabled,
-  type,
-  onChange,
-}: InputProps) => {
+const Input = ({ id, label, disabled, type, value, onChange }: InputProps) => {
   return (
     <input
-      placeholder={placeholder}
+      id={id}
+      placeholder={id}
       disabled={disabled}
-      value={value}
       type={type}
+      value={value}
       onChange={onChange}
       className="
         w-full
