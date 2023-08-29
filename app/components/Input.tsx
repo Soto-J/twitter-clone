@@ -13,6 +13,7 @@ interface InputProps {
   label: string;
   type?: string;
   disabled?: boolean;
+  required?: boolean;
 }
 
 const Input = ({
@@ -21,13 +22,14 @@ const Input = ({
   label,
   errors,
   disabled,
+  required,
   type = "text",
 }: InputProps) => {
   return (
     <input
-      {...register(id)}
+      {...register(id, { required })}
       id={id}
-      placeholder={id}
+      placeholder={label}
       disabled={disabled}
       type={type}
       className="

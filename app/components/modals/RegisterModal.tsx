@@ -1,5 +1,6 @@
 "use client";
 import { useCallback } from "react";
+import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
 
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -8,7 +9,6 @@ import useLoginModal from "@/app/hooks/useLoginModal";
 
 import Modal from "./Modal";
 import Input from "../Input";
-import { useForm, type FieldValues, SubmitHandler } from "react-hook-form";
 
 const RegisterModal = () => {
   const registerModal = useRegisterModal();
@@ -61,6 +61,7 @@ const RegisterModal = () => {
         label="Email"
         errors={errors}
         disabled={isSubmitting}
+        required
       />
       <Input
         register={register}
@@ -68,6 +69,7 @@ const RegisterModal = () => {
         label="Name"
         errors={errors}
         disabled={isSubmitting}
+        required
       />
       <Input
         register={register}
@@ -75,6 +77,7 @@ const RegisterModal = () => {
         label="Username"
         errors={errors}
         disabled={isSubmitting}
+        required
       />
       <Input
         register={register}
@@ -83,6 +86,7 @@ const RegisterModal = () => {
         type="password"
         errors={errors}
         disabled={isSubmitting}
+        required
       />
     </form>
   );
