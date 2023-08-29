@@ -1,8 +1,8 @@
 "use client";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 
 import axios from "axios";
-import { toast } from "react-hot-toast/headless";
+import toast from "react-hot-toast";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
 import useLoginModal from "@/app/hooks/useLoginModal";
 
@@ -37,6 +37,7 @@ const RegisterModal = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     console.log(data);
+    toast.success("Account created successfully");
     return;
     axios
       .post("/api/auth/register", {
@@ -45,6 +46,7 @@ const RegisterModal = () => {
       .then(() => {
         toast.success("Account created successfully");
         registerModal.onClose();
+        reset();
       })
       .catch((error) => {
         toast.error(error.response.data.message);

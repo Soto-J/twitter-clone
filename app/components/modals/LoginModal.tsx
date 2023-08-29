@@ -1,12 +1,13 @@
 "use client";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 
 import useLoginModal from "@/app/hooks/useLoginModal";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
 
+import toast from "react-hot-toast";
 import Modal from "./Modal";
 import Input from "../Input";
-import { useForm, FieldValues } from "react-hook-form";
+import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
 
 const LoginModal = () => {
   const loginModal = useLoginModal();
@@ -31,10 +32,13 @@ const LoginModal = () => {
     registerModal.onOpen();
   }, [isSubmitting, loginModal, registerModal]);
 
-  const onSubmit = useCallback(async () => {
-    // todo: login
-    loginModal.onClose();
-  }, [loginModal]);
+  const onSubmit: SubmitHandler<FieldValues> = useCallback(
+    async (data) => {
+      // todo: login
+      loginModal.onClose();
+    },
+    [loginModal]
+  );
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
