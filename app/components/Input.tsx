@@ -1,28 +1,35 @@
+"use client";
+
+import {
+  UseFormRegister,
+  type FieldValues,
+  type FieldErrors,
+} from "react-hook-form";
+
 interface InputProps {
+  register: UseFormRegister<FieldValues>;
+  errors: FieldErrors<FieldValues>;
   id: string;
   label: string;
   type?: string;
   disabled?: boolean;
-  value: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const Input = ({
+  register,
   id,
   label,
+  errors,
   disabled,
   type = "text",
-  value,
-  onChange,
 }: InputProps) => {
   return (
     <input
+      {...register(id)}
       id={id}
       placeholder={id}
       disabled={disabled}
       type={type}
-      value={value}
-      onChange={onChange}
       className="
         w-full
         rounded-md

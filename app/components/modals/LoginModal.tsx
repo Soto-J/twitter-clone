@@ -6,33 +6,34 @@ import useRegisterModal from "@/app/hooks/useRegisterModal";
 
 import Modal from "./Modal";
 import Input from "../Input";
+import { useForm, FieldValues } from "react-hook-form";
 
 const LoginModal = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
 
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<FieldValues>({
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
+
   const onModalToggle = useCallback(() => {
-    if (isLoading) return;
+    if (isSubmitting) return;
 
     loginModal.onClose();
     registerModal.onOpen();
-  }, [isLoading, loginModal, registerModal]);
+  }, [isSubmitting, loginModal, registerModal]);
 
   const onSubmit = useCallback(async () => {
-    try {
-      setIsLoading(true);
-
-      // todo: login
-      loginModal.onClose();
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
+    // todo: login
+    loginModal.onClose();
   }, [loginModal]);
 
   const bodyContent = (
@@ -40,17 +41,17 @@ const LoginModal = () => {
       <Input
         id="email"
         label="Email"
-        value={email}
-        disabled={isLoading}
-        onChange={(e) => setEmail(e.target.value)}
+        errors={errors}
+        disabled={isSubmitting}
+        register={register}
       />
       <Input
+        register={register}
         id="password"
         label="Password"
-        value={password}
         type="password"
-        disabled={isLoading}
-        onChange={(e) => setPassword(e.target.value)}
+        errors={errors}
+        disabled={isSubmitting}
       />
     </div>
   );
@@ -75,8 +76,8 @@ const LoginModal = () => {
       actionLabel="Sign in"
       isOpen={loginModal.isOpen}
       onClose={loginModal.onClose}
-      onSubmit={onSubmit}
-      disabled={isLoading}
+      onSubmit={handleSubmit(onSubmit)}
+      disabled={isSubmitting}
       body={bodyContent}
       footer={footerContent}
     />

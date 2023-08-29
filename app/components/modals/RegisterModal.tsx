@@ -8,34 +8,39 @@ import useLoginModal from "@/app/hooks/useLoginModal";
 
 import Modal from "./Modal";
 import Input from "../Input";
+import { useForm, type FieldValues, SubmitHandler } from "react-hook-form";
 
 const RegisterModal = () => {
-  const [email, setEmail] = useState("");
-  const [username, setUsername] = useState("");
-  const [name, setName] = useState("");
-  const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
 
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm<FieldValues>({
+    defaultValues: {
+      email: "",
+      username: "",
+      name: "",
+      password: "",
+    },
+  });
+
   const onModalToggle = useCallback(() => {
-    if (isLoading) return;
+    if (isSubmitting) return;
 
     registerModal.onClose();
     loginModal.onOpen();
-  }, [isLoading, registerModal, loginModal]);
+  }, [isSubmitting, registerModal, loginModal]);
 
-  const onSubmit = async () => {
-    setIsLoading(true);
-    console.log(name, email, username, password);
-
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    console.log(data);
+    return;
     axios
       .post("/api/auth/register", {
-        name,
-        email,
-        username,
-        password,
+        ...data,
       })
       .then(() => {
         toast.success("Account created successfully");
@@ -43,41 +48,39 @@ const RegisterModal = () => {
       })
       .catch((error) => {
         toast.error(error.response.data.message);
-      })
-      .finally(() => {
-        setIsLoading(false);
       });
   };
 
   const bodyContent = (
     <form className="flex flex-col gap-4">
       <Input
+        register={register}
         id="email"
         label="Email"
-        disabled={isLoading}
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
+        errors={errors}
+        disabled={isSubmitting}
       />
       <Input
+        register={register}
         id="name"
         label="Name"
-        disabled={isLoading}
-        value={name}
-        onChange={(e) => setName(e.target.value)}
+        errors={errors}
+        disabled={isSubmitting}
       />
       <Input
+        register={register}
         id="username"
         label="Username"
-        disabled={isLoading}
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
+        errors={errors}
+        disabled={isSubmitting}
       />
       <Input
+        register={register}
         id="password"
         label="Password"
-        disabled={isLoading}
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
+        type="password"
+        errors={errors}
+        disabled={isSubmitting}
       />
     </form>
   );
@@ -102,8 +105,8 @@ const RegisterModal = () => {
       actionLabel="Register"
       isOpen={registerModal.isOpen}
       onClose={registerModal.onClose}
-      onSubmit={onSubmit}
-      disabled={isLoading}
+      onSubmit={handleSubmit(onSubmit)}
+      disabled={isSubmitting}
       body={bodyContent}
       footer={footerContent}
     />

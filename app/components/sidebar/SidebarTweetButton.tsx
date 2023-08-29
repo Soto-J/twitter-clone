@@ -3,13 +3,16 @@ import { useRouter } from "next/navigation";
 
 import { FaFeather } from "react-icons/fa";
 import useLoginModal from "@/app/hooks/useLoginModal";
+import useRegisterModal from "@/app/hooks/useRegisterModal";
 
 const SidebarTweetButton = () => {
   const router = useRouter();
   const loginModal = useLoginModal();
+  const registerModal = useRegisterModal();
 
   const onClick = useCallback(() => {
-    loginModal.onOpen();
+    // loginModal.onOpen();
+    registerModal.onOpen();
   }, [loginModal]);
 
   return (
