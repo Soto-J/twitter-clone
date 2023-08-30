@@ -105,7 +105,7 @@ const RegisterModal = () => {
           onClick={onModalToggle}
           className="cursor-pointer text-white hover:underline"
         >
-          Sign in
+          Log in
         </span>
       </p>
     </div>

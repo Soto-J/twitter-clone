@@ -23,7 +23,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const user = await getCurrentUser();
+  const currentUser = await getCurrentUser();
 
   return (
     <html lang="en">
@@ -36,7 +36,7 @@ export default async function RootLayout({
 
         <main className="container mx-auto h-full max-w-6xl xl:px-32">
           <div className="grid h-full grid-cols-4">
-            <Sidebar user={user} />
+            <Sidebar currentUser={currentUser} />
             <div
               className="
                 col-span-3

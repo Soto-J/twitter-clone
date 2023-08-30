@@ -46,6 +46,7 @@ const LoginModal = () => {
 
       toast.success("Logged in successfully");
       loginModal.onClose();
+      reset();
       router.refresh();
     });
     loginModal.onClose();
@@ -81,7 +82,7 @@ const LoginModal = () => {
           onClick={onModalToggle}
           className="cursor-pointer text-white hover:underline"
         >
-          Log in
+          Sign up
         </span>
       </p>
     </div>

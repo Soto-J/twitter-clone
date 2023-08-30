@@ -12,10 +12,10 @@ import SidebarItem from "./SidebarItem";
 import SidebarTweetButton from "./SidebarTweetButton";
 
 interface SidebarProps {
-  user: User | null;
+  currentUser: User | null;
 }
 
-const Sidebar = ({ user }: SidebarProps) => {
+const Sidebar = ({ currentUser }: SidebarProps) => {
   const items = [
     {
       label: "Home",
@@ -34,8 +34,8 @@ const Sidebar = ({ user }: SidebarProps) => {
     },
   ];
 
-  console.log(user);
-  
+  console.log(currentUser);
+
   return (
     <div className="col-span-1 h-full pr-4 md:pr-6">
       <div className="flex flex-col items-end">
@@ -49,11 +49,14 @@ const Sidebar = ({ user }: SidebarProps) => {
               icon={item.icon}
             />
           ))}
-          <SidebarItem
-            onClick={() => signOut()}
-            label="Logout"
-            icon={BiLogOut}
-          />
+
+          {currentUser && (
+            <SidebarItem
+              onClick={() => signOut()}
+              label="Logout"
+              icon={BiLogOut}
+            />
+          )}
           <SidebarTweetButton />
         </div>
       </div>
