@@ -47,14 +47,15 @@ const Sidebar = ({ currentUser }: SidebarProps) => {
               href={item.href}
               label={item.label}
               icon={item.icon}
+              isAuth={currentUser}
             />
           ))}
 
           {currentUser && (
             <SidebarItem
-              onClick={() => signOut()}
               label="Logout"
               icon={BiLogOut}
+              onClick={() => signOut()}
             />
           )}
           <SidebarTweetButton />

@@ -1,4 +1,6 @@
 "use client";
+import useLoginModal from "@/app/hooks/useLoginModal";
+import { User } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 import { IconType } from "react-icons";
@@ -8,6 +10,7 @@ interface SidebarItemProps {
   label: string;
   icon: IconType;
   onClick?: () => void;
+  isAuth?: User | null;
 }
 
 const SidebarItem = ({
@@ -15,12 +18,20 @@ const SidebarItem = ({
   label,
   icon: Icon,
   onClick,
+  isAuth,
 }: SidebarItemProps) => {
   const router = useRouter();
+  const loginModal = useLoginModal();
+
+  console.log("isAuth", isAuth);
 
   const onClickHandler = useCallback(() => {
     if (onClick) {
       return onClick();
+    }
+
+    if (!isAuth) {
+      return loginModal.onOpen();
     }
 
     if (href) {
