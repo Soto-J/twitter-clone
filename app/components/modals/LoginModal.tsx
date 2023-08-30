@@ -57,16 +57,16 @@ const LoginModal = () => {
       <Input
         id="email"
         label="Email"
+        register={register}
         errors={errors}
         disabled={isSubmitting}
-        register={register}
         required
       />
       <Input
-        register={register}
         id="password"
         label="Password"
         type="password"
+        register={register}
         errors={errors}
         disabled={isSubmitting}
         required

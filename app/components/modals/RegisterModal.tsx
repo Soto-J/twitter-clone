@@ -1,6 +1,7 @@
 "use client";
 import { useCallback } from "react";
 import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
+import { signIn } from "next-auth/react";
 
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -9,7 +10,6 @@ import useLoginModal from "@/app/hooks/useLoginModal";
 
 import Modal from "./Modal";
 import Input from "../Input";
-import { signIn } from "next-auth/react";
 
 const RegisterModal = () => {
   const registerModal = useRegisterModal();
@@ -62,34 +62,34 @@ const RegisterModal = () => {
   const bodyContent = (
     <form className="flex flex-col gap-4">
       <Input
-        register={register}
         id="email"
         label="Email"
         errors={errors}
+        register={register}
         disabled={isSubmitting}
         required
       />
       <Input
-        register={register}
         id="name"
         label="Name"
+        register={register}
         errors={errors}
         disabled={isSubmitting}
         required
       />
       <Input
-        register={register}
         id="username"
         label="Username"
+        register={register}
         errors={errors}
         disabled={isSubmitting}
         required
       />
       <Input
-        register={register}
         id="password"
         label="Password"
         type="password"
+        register={register}
         errors={errors}
         disabled={isSubmitting}
         required

@@ -1,9 +1,9 @@
 "use client";
 
-import {
+import type {
   UseFormRegister,
-  type FieldValues,
-  type FieldErrors,
+  FieldValues,
+  FieldErrors,
 } from "react-hook-form";
 
 interface InputProps {
