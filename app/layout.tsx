@@ -2,12 +2,13 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
+import getCurrentUser from "./actions/getCurrentUser";
+
+import ClientOnly from "./components/ClientOnly";
 import Sidebar from "./components/sidebar/Sidebar";
 import Followbar from "./components/followbar/Followbar";
-import ClientOnly from "./components/ClientOnly";
 import LoginModal from "./components/modals/LoginModal";
 import RegisterModal from "./components/modals/RegisterModal";
-import getCurrentUser from "./actions/getCurrentUser";
 import ToastProvider from "./provider/ToastProvider";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -23,7 +24,6 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const user = await getCurrentUser();
-  console.log("currentUser:", user);
 
   return (
     <html lang="en">
@@ -36,7 +36,7 @@ export default async function RootLayout({
 
         <main className="container mx-auto h-full max-w-6xl xl:px-32">
           <div className="grid h-full grid-cols-4">
-            <Sidebar />
+            <Sidebar user={user} />
             <div
               className="
                 col-span-3

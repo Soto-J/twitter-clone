@@ -1,17 +1,20 @@
 "use client";
 import { useCallback } from "react";
+import { useRouter } from "next/navigation";
+import { signIn } from "next-auth/react";
 
+import { useForm, type FieldValues, type SubmitHandler } from "react-hook-form";
 import toast from "react-hot-toast";
 import useLoginModal from "@/app/hooks/useLoginModal";
 import useRegisterModal from "@/app/hooks/useRegisterModal";
 
 import Modal from "./Modal";
 import Input from "../Input";
-import { useForm, FieldValues, SubmitHandler } from "react-hook-form";
 
 const LoginModal = () => {
   const loginModal = useLoginModal();
   const registerModal = useRegisterModal();
+  const router = useRouter();
 
   const {
     register,
@@ -32,13 +35,21 @@ const LoginModal = () => {
     registerModal.onOpen();
   }, [isSubmitting, loginModal, registerModal]);
 
-  const onSubmit: SubmitHandler<FieldValues> = useCallback(
-    async (data) => {
-      // todo: login
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    signIn("credentials", {
+      ...data,
+      redirect: false,
+    }).then((res) => {
+      if (res?.error) {
+        return toast.error("Invalid credentials");
+      }
+
+      toast.success("Logged in successfully");
       loginModal.onClose();
-    },
-    [loginModal]
-  );
+      router.refresh();
+    });
+    loginModal.onClose();
+  };
 
   const bodyContent = (
     <div className="flex flex-col gap-4">

@@ -24,23 +24,29 @@ export const options: NextAuthOptions = {
           where: { email: credentials.email },
         });
 
+        console.log("OPTIONS 1");
+
         if (!user || !user?.hashedPassword) {
           throw new Error("Invalid credentials");
         }
+        console.log("OPTIONS 2");
 
         const isValidPassword = await bcrypt.compare(
-          user.hashedPassword,
-          credentials.password
+          credentials.password,
+          user.hashedPassword
         );
 
         if (!isValidPassword) {
           throw new Error("Invalid credentials");
         }
 
+        console.log("OPTIONS 3", user);
+
         return user;
       },
     }),
   ],
+  pages: { signIn: "/" },
   debug: process.env.NODE_ENV === "development",
   session: { strategy: "jwt" },
   jwt: { secret: process.env.NEXTAUTH_JWT_SECRET },

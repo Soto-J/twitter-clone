@@ -9,6 +9,7 @@ import useLoginModal from "@/app/hooks/useLoginModal";
 
 import Modal from "./Modal";
 import Input from "../Input";
+import { signIn } from "next-auth/react";
 
 const RegisterModal = () => {
   const registerModal = useRegisterModal();
@@ -37,8 +38,7 @@ const RegisterModal = () => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     console.log(data);
-    toast.success("Account created successfully");
-    return;
+
     axios
       .post("/api/auth/register", {
         ...data,
@@ -47,6 +47,12 @@ const RegisterModal = () => {
         toast.success("Account created successfully");
         registerModal.onClose();
         reset();
+
+        signIn("credentials", {
+          email: data.email,
+          password: data.password,
+          redirect: false,
+        });
       })
       .catch((error) => {
         toast.error(error.response.data.message);

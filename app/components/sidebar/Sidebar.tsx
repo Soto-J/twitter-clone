@@ -1,13 +1,21 @@
 "use client";
+import { signOut } from "next-auth/react";
+
 import { BsBellFill, BsHouseFill } from "react-icons/bs";
 import { FaUser } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
+import { SafeUser } from "@/app/types";
+import { User } from "@prisma/client";
 
 import SidebarLogo from "./SidebarLogo";
 import SidebarItem from "./SidebarItem";
 import SidebarTweetButton from "./SidebarTweetButton";
 
-const Sidebar = () => {
+interface SidebarProps {
+  user: User | null;
+}
+
+const Sidebar = ({ user }: SidebarProps) => {
   const items = [
     {
       label: "Home",
@@ -26,6 +34,8 @@ const Sidebar = () => {
     },
   ];
 
+  console.log(user);
+  
   return (
     <div className="col-span-1 h-full pr-4 md:pr-6">
       <div className="flex flex-col items-end">
@@ -37,10 +47,13 @@ const Sidebar = () => {
               href={item.href}
               label={item.label}
               icon={item.icon}
-              onClick={() => {}}
             />
           ))}
-          <SidebarItem onClick={() => {}} label="Logout" icon={BiLogOut} />
+          <SidebarItem
+            onClick={() => signOut()}
+            label="Logout"
+            icon={BiLogOut}
+          />
           <SidebarTweetButton />
         </div>
       </div>

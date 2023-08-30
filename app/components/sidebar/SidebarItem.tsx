@@ -1,11 +1,13 @@
 "use client";
+import { useRouter } from "next/navigation";
+import { useCallback } from "react";
 import { IconType } from "react-icons";
 
 interface SidebarItemProps {
   href?: string;
   label: string;
   icon: IconType;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const SidebarItem = ({
@@ -14,10 +16,23 @@ const SidebarItem = ({
   icon: Icon,
   onClick,
 }: SidebarItemProps) => {
+  const router = useRouter();
+
+  const onClickHandler = useCallback(() => {
+    if (onClick) {
+      return onClick();
+    }
+
+    if (href) {
+      return router.push(href);
+    }
+  }, [onClick, href, router]);
+
   return (
     <div className="flex items-center">
       {/* Mobile */}
       <div
+        onClick={onClick}
         className="
           relative
           h-14
@@ -32,11 +47,13 @@ const SidebarItem = ({
           lg:hidden
         "
       >
-        <Icon size={28} color="white" onClick={onClick} />
+        <Icon size={28} color="white" />
+        <p className="lg:text-xl lg:text-white">{label}</p>
       </div>
 
       {/* Desktop */}
       <div
+        onClick={onClickHandler}
         className="
           hidden
           lg:relative
@@ -51,7 +68,7 @@ const SidebarItem = ({
         "
       >
         <Icon size={24} color="white" />
-        <p className="text-xl text-white">{label}</p>
+        <p className="lg:text-xl lg:text-white">{label}</p>
       </div>
     </div>
   );
