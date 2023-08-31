@@ -53,7 +53,6 @@ export default async function RootLayout({
                 {children}
               </div>
               <Followbar />
-              <div className="text-sky-500">section 4</div>
             </div>
           </main>
         </NextAuthSessionProvider>
