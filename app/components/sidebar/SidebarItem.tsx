@@ -1,49 +1,43 @@
 "use client";
-import useLoginModal from "@/app/hooks/useLoginModal";
-import { User } from "@prisma/client";
-import { useRouter } from "next/navigation";
 import { useCallback } from "react";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+
 import { IconType } from "react-icons";
+
+import useLoginModal from "@/app/hooks/useLoginModal";
 
 interface SidebarItemProps {
   href?: string;
   label: string;
   icon: IconType;
-  onClick?: () => void;
-  isAuth?: User | null;
+  logOut?: () => void;
 }
 
-const SidebarItem = ({
-  href,
-  label,
-  icon: Icon,
-  onClick,
-  isAuth,
-}: SidebarItemProps) => {
+const SidebarItem = ({ href, label, icon: Icon, logOut }: SidebarItemProps) => {
   const router = useRouter();
   const loginModal = useLoginModal();
-
-  console.log("isAuth", isAuth);
+  const session = useSession();
 
   const onClickHandler = useCallback(() => {
-    if (onClick) {
-      return onClick();
+    if (logOut) {
+      return logOut();
     }
 
-    if (!isAuth) {
+    if (session.status === "unauthenticated" && href !== "/") {
       return loginModal.onOpen();
     }
 
     if (href) {
       return router.push(href);
     }
-  }, [onClick, href, router]);
+  }, [logOut, href, router, loginModal, session]);
 
   return (
     <div className="flex items-center">
       {/* Mobile */}
       <div
-        onClick={onClick}
+        onClick={logOut}
         className="
           relative
           h-14

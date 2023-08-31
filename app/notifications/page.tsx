@@ -4,7 +4,7 @@ import Header from "../components/Header";
 const page = () => {
   return (
     <div className="text-white">
-      <Header label={"Notifications"} />
+      <Header label={"Notifications"} showBackArrow />
       page
     </div>
   );
