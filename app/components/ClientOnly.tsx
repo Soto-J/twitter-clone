@@ -6,13 +6,13 @@ interface ClientOnlyProps {
 }
 
 const ClientOnly = ({ children }: ClientOnlyProps) => {
-  const [show, setShow] = useState(false);
+  const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
-    setShow(true);
+    setIsHydrated(true);
   }, []);
 
-  if (!show) {
+  if (!isHydrated) {
     return null;
   }
 

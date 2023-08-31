@@ -8,8 +8,6 @@ import { getServerSession } from "next-auth";
 const Followbar = async () => {
   const users = await getAllUsers();
   const session = await getServerSession();
-  console.log("USERS", users);
-  console.log("SESSION", session);
   if (users?.length === 0 || session === null) {
     return null;
   }

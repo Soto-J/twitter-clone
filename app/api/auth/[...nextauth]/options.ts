@@ -37,8 +37,6 @@ export const options: NextAuthOptions = {
           throw new Error("Invalid credentials");
         }
 
-        console.log("OPTIONS 3", user);
-
         return user;
       },
     }),

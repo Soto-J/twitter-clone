@@ -44,11 +44,11 @@ export default async function RootLayout({
               <Sidebar currentUser={currentUser} />
               <div
                 className="
-                  col-span-3
-                  border-x
-                  border-neutral-800
-                  lg:col-span-2
-                  "
+                col-span-3
+                border-x
+                border-neutral-800
+                lg:col-span-2
+                "
               >
                 {children}
               </div>

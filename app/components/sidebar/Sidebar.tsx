@@ -11,29 +11,29 @@ import SidebarLogo from "./SidebarLogo";
 import SidebarItem from "./SidebarItem";
 import SidebarTweetButton from "./SidebarTweetButton";
 
-const items = [
-  {
-    label: "Home",
-    href: "/",
-    icon: BsHouseFill,
-  },
-  {
-    label: "Notifications",
-    href: "/notifications",
-    icon: BsBellFill,
-  },
-  {
-    label: "Profile",
-    href: "/users/123",
-    icon: FaUser,
-  },
-];
-
 interface SidebarProps {
   currentUser: User | null;
 }
 
 const Sidebar = ({ currentUser }: SidebarProps) => {
+  const items = [
+    {
+      label: "Home",
+      href: "/",
+      icon: BsHouseFill,
+    },
+    {
+      label: "Notifications",
+      href: "/notifications",
+      icon: BsBellFill,
+    },
+    {
+      label: "Profile",
+      href: `/users/${currentUser?.id}`,
+      icon: FaUser,
+    },
+  ];
+  console.log("CURRENTUSER", currentUser);
   return (
     <div className="col-span-1 h-full pr-6">
       <div className="flex flex-col items-end">

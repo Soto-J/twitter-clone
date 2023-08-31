@@ -1,18 +1,24 @@
 import prisma from "@/libs/prismadb";
 
-export default async function getUserById(id: string) {
+interface IParams {
+  userId?: string;
+}
+
+export default async function getUserById(params: IParams) {
+  const { userId } = params;
+
   try {
     const user = await prisma.user.findUnique({
-      where: { id },
+      where: { id: userId },
     });
-
+    console.log("getUserById()", user);
     if (!user) {
       return null;
     }
 
     const followersCount = await prisma.user.count({
       where: {
-        followingIds: { has: id },
+        followingIds: { has: userId },
       },
     });
 
@@ -21,6 +27,6 @@ export default async function getUserById(id: string) {
       followersCount,
     };
   } catch (error: any) {
-    return null;
+    throw new Error();
   }
 }
