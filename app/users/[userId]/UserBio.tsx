@@ -4,6 +4,7 @@ import { User } from "@prisma/client";
 import Button from "@/app/components/Button";
 import { BiCalendar } from "react-icons/bi";
 import { UserWithfollowingCount } from "./page";
+import { useCallback } from "react";
 
 interface UserBioProps {
   user: UserWithfollowingCount;
@@ -19,11 +20,19 @@ const UserBio = ({ user, currentUser }: UserBioProps) => {
     return format(new Date(user.createdAt), "MMMM yyyy");
   };
 
+  const onEditClick = useCallback(() => {
+    console.log("edit");
+  }, []);
+
+  const onFollowClick = useCallback(() => {
+    console.log("follow");
+  }, []);
+
   return (
     <div className="border-b border-neutral-800 pb-4">
       <div className="flex justify-end p-2">
         {user?.id === currentUser?.id ? (
-          <Button secondary label="Edit" onClick={() => {}} />
+          <Button secondary label="Edit" onClick={onEditClick} />
         ) : (
           <Button secondary label="Follow" onClick={() => {}} />
         )}

@@ -4,15 +4,14 @@ import { Inter } from "next/font/google";
 
 import { getServerSession } from "next-auth";
 import getCurrentUser from "./actions/getCurrentUser";
-
+import NextAuthSessionProvider from "./provider/SessionProvider";
 import ClientOnly from "./components/ClientOnly";
+
 import Sidebar from "./components/sidebar/Sidebar";
 import Followbar from "./components/followbar/Followbar";
 import LoginModal from "./components/modals/LoginModal";
 import RegisterModal from "./components/modals/RegisterModal";
 import ToastProvider from "./provider/ToastProvider";
-import NextAuthSessionProvider from "./provider/SessionProvider";
-import getAllUsers from "./actions/getAllUsers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -44,10 +43,10 @@ export default async function RootLayout({
               <Sidebar currentUser={currentUser} />
               <div
                 className="
-                col-span-3
-                border-x
-                border-neutral-800
-                lg:col-span-2
+                  col-span-3
+                  border-x
+                  border-neutral-800
+                  lg:col-span-2
                 "
               >
                 {children}

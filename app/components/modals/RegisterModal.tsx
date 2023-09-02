@@ -40,7 +40,7 @@ const RegisterModal = () => {
     console.log(data);
 
     axios
-      .post("/api/auth/register", {
+      .post("/api/register", {
         ...data,
       })
       .then(() => {
