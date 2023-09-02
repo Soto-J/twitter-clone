@@ -5,6 +5,7 @@ import Button from "@/app/components/Button";
 import { BiCalendar } from "react-icons/bi";
 import { UserWithfollowingCount } from "./page";
 import { useCallback } from "react";
+import { useEditModal } from "@/app/hooks/useEditModal";
 
 interface UserBioProps {
   user: UserWithfollowingCount;
@@ -12,6 +13,8 @@ interface UserBioProps {
 }
 
 const UserBio = ({ user, currentUser }: UserBioProps) => {
+  const editModal = useEditModal();
+
   const createdAt = () => {
     if (!user?.createdAt) {
       return null;
@@ -21,11 +24,11 @@ const UserBio = ({ user, currentUser }: UserBioProps) => {
   };
 
   const onEditClick = useCallback(() => {
-    console.log("edit");
-  }, []);
+    editModal.onOpen();
+  }, [editModal]);
 
   const onFollowClick = useCallback(() => {
-    console.log("follow");
+    editModal.onOpen();
   }, []);
 
   return (

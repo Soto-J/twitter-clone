@@ -12,6 +12,7 @@ import Followbar from "./components/followbar/Followbar";
 import LoginModal from "./components/modals/LoginModal";
 import RegisterModal from "./components/modals/RegisterModal";
 import ToastProvider from "./provider/ToastProvider";
+import EditModal from "./components/modals/EditModal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -35,6 +36,7 @@ export default async function RootLayout({
           <ClientOnly>
             <LoginModal />
             <RegisterModal />
+            <EditModal />
             <ToastProvider />
           </ClientOnly>
 
