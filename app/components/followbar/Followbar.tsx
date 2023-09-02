@@ -1,13 +1,12 @@
-import getAllUsers from "@/app/actions/getAllUsers";
-import Button from "../Button";
-import Avatar from "../Avatar";
-import { User } from "@prisma/client";
-import { useSession } from "next-auth/react";
 import { getServerSession } from "next-auth";
+import getAllUsers from "@/app/actions/getAllUsers";
+
+import Avatar from "../Avatar";
 
 const Followbar = async () => {
   const users = await getAllUsers();
   const session = await getServerSession();
+
   if (users?.length === 0 || session === null) {
     return null;
   }
@@ -22,7 +21,7 @@ const Followbar = async () => {
               <Avatar userId={user.id} />
               <div className="flex flex-col">
                 <p className="text-sm font-semibold text-white">{user.name}</p>
-                <p className="text-neutral-400">@{user.username}</p>
+                <p className="text-sm text-neutral-400">@{user.username}</p>
               </div>
             </div>
           ))}

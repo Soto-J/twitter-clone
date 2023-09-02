@@ -39,7 +39,7 @@ export default async function RootLayout({
             <ToastProvider />
           </ClientOnly>
 
-          <main className="container mx-auto h-full max-w-6xl xl:px-32">
+          <main className="container mx-auto h-full max-w-6xl xl:px-24">
             <div className="grid h-full grid-cols-4">
               <Sidebar currentUser={currentUser} />
               <div
