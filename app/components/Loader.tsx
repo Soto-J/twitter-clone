@@ -1,4 +1,4 @@
-import { PuffLoader } from "react-spinners";
+import { ClipLoader } from "react-spinners";
 
 const Loader = () => {
   return (
@@ -11,7 +11,7 @@ const Loader = () => {
           justify-center
         "
     >
-      <PuffLoader size={100} color="red" />
+      <ClipLoader size={80} color="lightblue" />
     </div>
   );
 };

@@ -11,7 +11,7 @@ export default async function getUserById(params: IParams) {
     const user = await prisma.user.findUnique({
       where: { id: userId },
     });
-    console.log("getUserById()", user);
+    
     if (!user) {
       return null;
     }

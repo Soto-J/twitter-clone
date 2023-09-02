@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 import placeholderImg from "../../public/images/placeholder.png";
-import getCurrentUser from "../actions/getCurrentUser";
 
 interface AvatarProps {
   userId: string;
@@ -14,15 +13,12 @@ interface AvatarProps {
 
 const Avatar = ({ userId, isLarge, hasBorder }: AvatarProps) => {
   const router = useRouter();
-  // const currentUser = await getCurrentUser();
-  // console.log("CURRENTUSER", currentUser);
 
   const onClick = useCallback(
     (e: MouseEvent<HTMLImageElement>) => {
       e.stopPropagation();
 
-      const url = `/users/${userId}`;
-      router.push(url);
+      router.push(`/users/${userId}`);
     },
     [router, userId]
   );

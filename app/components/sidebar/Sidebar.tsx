@@ -10,12 +10,15 @@ import { User } from "@prisma/client";
 import SidebarLogo from "./SidebarLogo";
 import SidebarItem from "./SidebarItem";
 import SidebarTweetButton from "./SidebarTweetButton";
+import { useRouter } from "next/navigation";
 
 interface SidebarProps {
   currentUser: User | null;
 }
 
 const Sidebar = ({ currentUser }: SidebarProps) => {
+  const router = useRouter();
+
   const items = [
     {
       label: "Home",
@@ -33,6 +36,12 @@ const Sidebar = ({ currentUser }: SidebarProps) => {
       icon: FaUser,
     },
   ];
+
+  const logOut = () => {
+    signOut();
+    router.push("/");
+  };
+
   console.log("CURRENTUSER", currentUser);
   return (
     <div className="col-span-1 h-full pr-6">
@@ -49,11 +58,7 @@ const Sidebar = ({ currentUser }: SidebarProps) => {
           ))}
 
           {currentUser && (
-            <SidebarItem
-              label="Logout"
-              icon={BiLogOut}
-              logOut={() => signOut()}
-            />
+            <SidebarItem label="Logout" icon={BiLogOut} logOut={logOut} />
           )}
           <SidebarTweetButton />
         </div>
