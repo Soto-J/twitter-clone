@@ -37,7 +37,7 @@ const SidebarItem = ({ href, label, icon: Icon, logOut }: SidebarItemProps) => {
     <div className="flex items-center">
       {/* Mobile */}
       <div
-        onClick={logOut}
+        onClick={onClickHandler}
         className="
           relative
           h-14
