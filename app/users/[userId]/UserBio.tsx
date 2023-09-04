@@ -1,11 +1,13 @@
 "use client";
 import { format } from "date-fns";
+
 import { User } from "@prisma/client";
-import Button from "@/app/components/Button";
-import { BiCalendar } from "react-icons/bi";
 import { UserWithfollowingCount } from "./page";
+import { BiCalendar } from "react-icons/bi";
 import { useCallback } from "react";
 import { useEditModal } from "@/app/hooks/useEditModal";
+
+import Button from "@/app/components/Button";
 
 interface UserBioProps {
   user: UserWithfollowingCount;
@@ -28,7 +30,7 @@ const UserBio = ({ user, currentUser }: UserBioProps) => {
   }, [editModal]);
 
   const onFollowClick = useCallback(() => {
-    editModal.onOpen();
+    // TODO: implement follow
   }, []);
 
   return (
@@ -37,7 +39,7 @@ const UserBio = ({ user, currentUser }: UserBioProps) => {
         {user?.id === currentUser?.id ? (
           <Button secondary label="Edit" onClick={onEditClick} />
         ) : (
-          <Button secondary label="Follow" onClick={() => {}} />
+          <Button secondary label="Follow" onClick={onFollowClick} />
         )}
       </div>
 

@@ -13,6 +13,8 @@ import LoginModal from "./components/modals/LoginModal";
 import RegisterModal from "./components/modals/RegisterModal";
 import ToastProvider from "./provider/ToastProvider";
 import EditModal from "./components/modals/EditModal";
+import { Suspense } from "react";
+import Loader from "./components/Loader";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -31,8 +33,8 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <NextAuthSessionProvider>
+      <NextAuthSessionProvider>
+        <body className={inter.className}>
           <ClientOnly>
             <LoginModal />
             <RegisterModal />
@@ -56,8 +58,8 @@ export default async function RootLayout({
               <Followbar />
             </div>
           </main>
-        </NextAuthSessionProvider>
-      </body>
+        </body>
+      </NextAuthSessionProvider>
     </html>
   );
 }
