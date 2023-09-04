@@ -8,6 +8,7 @@ import Modal from "./Modal";
 import Input from "../Input";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 const EditModal = () => {
   const router = useRouter();
@@ -31,15 +32,9 @@ const EditModal = () => {
   const onEditClick: SubmitHandler<FieldValues> = useCallback(
     async (data) => {
       try {
-        const response = await fetch("/api/edit", {
-          method: "POST",
-          body: JSON.stringify(data),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await axios.post("/api/edit", data);
 
-        if (!response.ok) {
+        if (response.status !== 200) {
           throw new Error("Something went wrong");
         }
 
@@ -99,6 +94,7 @@ const EditModal = () => {
       isOpen={editModal.isOpen}
       title="Edit profile"
       actionLabel="Submit"
+      disabled={isSubmitting}
       onClose={editModal.onClose}
       onSubmit={handleSubmit(onEditClick)}
       body={bodyContent}
