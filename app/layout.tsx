@@ -1,8 +1,9 @@
 import "./globals.css";
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-
 import { getServerSession } from "next-auth";
+
 import getCurrentUser from "./actions/getCurrentUser";
 import NextAuthSessionProvider from "./provider/SessionProvider";
 import ClientOnly from "./components/ClientOnly";
@@ -13,7 +14,6 @@ import LoginModal from "./components/modals/LoginModal";
 import RegisterModal from "./components/modals/RegisterModal";
 import ToastProvider from "./provider/ToastProvider";
 import EditModal from "./components/modals/EditModal";
-import { Suspense } from "react";
 import Loader from "./components/Loader";
 
 const inter = Inter({ subsets: ["latin"] });

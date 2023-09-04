@@ -108,7 +108,7 @@ const EditModal = () => {
       onSubmit={handleSubmit(onEditClick)}
       body={bodyContent}
       cancelButton
-      resetForm={reset}
+      resetFormOnClose={reset}
     />
   );
 };

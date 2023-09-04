@@ -11,7 +11,7 @@ interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: () => void;
-  resetForm?: UseFormReset<FieldValues>;
+  resetFormOnClose?: UseFormReset<FieldValues>;
   title: string;
   body?: React.ReactElement;
   footer?: React.ReactElement;
@@ -25,7 +25,7 @@ const Modal = ({
   cancelButton,
   onClose,
   onSubmit,
-  resetForm,
+  resetFormOnClose,
   title,
   body,
   footer,
@@ -36,15 +36,14 @@ const Modal = ({
     if (disabled) return;
 
     onClose();
-    resetForm?.();
-  }, [disabled, onClose, resetForm]);
+    resetFormOnClose?.();
+  }, [disabled, onClose, resetFormOnClose]);
 
   const handleSubmit = useCallback(() => {
     if (disabled) return;
 
     onSubmit();
-    resetForm?.();
-  }, [disabled, onSubmit, resetForm]);
+  }, [disabled, onSubmit]);
 
   if (!isOpen) {
     return null;
