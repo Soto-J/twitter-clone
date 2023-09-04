@@ -7,7 +7,6 @@ import getCurrentUser from "@/app/actions/getCurrentUser";
 import Header from "@/app/components/Header";
 import UserHero from "./UserHero";
 import UserBio from "./UserBio";
-import Loader from "@/app/components/Loader";
 
 export interface UserWithfollowingCount extends User {
   followersCount: number;

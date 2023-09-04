@@ -1,23 +1,25 @@
 "use client";
 import { useCallback } from "react";
+import { useRouter } from "next/navigation";
 
+import axios from "axios";
 import { useEditModal } from "@/app/hooks/useEditModal";
 import { useForm, type SubmitHandler, type FieldValues } from "react-hook-form";
 
+import ImageUpload from "../ImageUpload";
 import Modal from "./Modal";
 import Input from "../Input";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
-import axios from "axios";
 
 const EditModal = () => {
   const router = useRouter();
   const editModal = useEditModal();
-
   const {
     register,
     reset,
     handleSubmit,
+    setValue,
+    watch,
     formState: { errors, isSubmitting },
   } = useForm<FieldValues>({
     defaultValues: {
@@ -28,6 +30,9 @@ const EditModal = () => {
       coverImage: "",
     },
   });
+
+  const watchProfileImage = watch("profileImage");
+  const watchCoverImage = watch("coverImage");
 
   const onEditClick: SubmitHandler<FieldValues> = useCallback(
     async (data) => {
@@ -66,26 +71,30 @@ const EditModal = () => {
         label="Name"
       />
       <Input
-        disabled={isSubmitting}
-        register={register}
-        errors={errors}
         id="bio"
         label="Bio"
-      />
-      {/* <Input
-        disabled={isSubmitting}
         register={register}
         errors={errors}
+        disabled={isSubmitting}
+      />
+      <ImageUpload
         id="profileImage"
-        label="Profile Image"
-      />
-      <Input
-        disabled={isSubmitting}
+        label="Upload Profile Image"
         register={register}
         errors={errors}
+        disabled={isSubmitting}
+        onChange={(value) => setValue("profileImage", value)}
+        imageUpload={watchProfileImage}
+      />
+      <ImageUpload
         id="coverImage"
-        label="Cover Image"
-      /> */}
+        label="Upload Cover Image"
+        register={register}
+        errors={errors}
+        disabled={isSubmitting}
+        onChange={(value) => setValue("coverImage", value)}
+        imageUpload={watchCoverImage}
+      />
     </div>
   );
 
@@ -98,6 +107,8 @@ const EditModal = () => {
       onClose={editModal.onClose}
       onSubmit={handleSubmit(onEditClick)}
       body={bodyContent}
+      cancelButton
+      resetForm={reset}
     />
   );
 };

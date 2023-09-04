@@ -4,23 +4,24 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 import placeholderImg from "../../public/images/placeholder.png";
+import { User } from "@prisma/client";
 
 interface AvatarProps {
-  userId: string;
+  user: User | null;
   isLarge?: boolean;
   hasBorder?: boolean;
 }
 
-const Avatar = ({ userId, isLarge, hasBorder }: AvatarProps) => {
+const Avatar = ({ user, isLarge, hasBorder }: AvatarProps) => {
   const router = useRouter();
 
   const onClick = useCallback(
     (e: MouseEvent<HTMLImageElement>) => {
       e.stopPropagation();
 
-      router.push(`/users/${userId}`);
+      router.push(`/users/${user?.id}`);
     },
-    [router, userId]
+    [router, user]
   );
 
   return (
@@ -38,8 +39,8 @@ const Avatar = ({ userId, isLarge, hasBorder }: AvatarProps) => {
     >
       <Image
         onClick={onClick}
-        src={placeholderImg}
-        alt="avatar"
+        src={user?.profileImage || placeholderImg}
+        alt={user?.name || "Profile Image"}
         fill
         className="rounded-full object-cover"
       />

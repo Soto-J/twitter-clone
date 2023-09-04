@@ -10,17 +10,21 @@ interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: () => void;
+  resetForm: () => void;
   title: string;
   body?: React.ReactElement;
   footer?: React.ReactElement;
   actionLabel: string;
   disabled?: boolean;
+  cancelButton?: boolean;
 }
 
 const Modal = ({
   isOpen,
+  cancelButton,
   onClose,
   onSubmit,
+  resetForm,
   title,
   body,
   footer,
@@ -31,12 +35,14 @@ const Modal = ({
     if (disabled) return;
 
     onClose();
+    resetForm();
   }, [disabled, onClose]);
 
   const handleSubmit = useCallback(() => {
     if (disabled) return;
 
     onSubmit();
+    resetForm();
   }, [disabled, onSubmit]);
 
   if (!isOpen) {
@@ -120,14 +126,25 @@ const Modal = ({
             <div className="relative flex-auto p-10">{body}</div>
             {/* FOOTER */}
             <div className="flex flex-col gap-2 p-10">
-              <Button
-                large
-                secondary
-                fullWidth
-                label={actionLabel}
-                onClick={handleSubmit}
-                disabled={disabled}
-              />
+              <div className="flex gap-10">
+                {cancelButton && (
+                  <Button
+                    large
+                    secondary
+                    fullWidth
+                    label="Cancel"
+                    onClick={handleClose}
+                  />
+                )}
+                <Button
+                  large
+                  secondary
+                  fullWidth
+                  label={actionLabel}
+                  onClick={handleSubmit}
+                  disabled={disabled}
+                />
+              </div>
               {footer}
             </div>
           </div>

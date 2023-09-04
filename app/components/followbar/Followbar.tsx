@@ -18,7 +18,7 @@ const Followbar = async () => {
         <div className="mt-4 flex flex-col gap-6">
           {users?.map((user) => (
             <div key={user.id} className="flex gap-4">
-              <Avatar userId={user.id} />
+              <Avatar user={user} />
               <div className="flex flex-col">
                 <p className="text-sm font-semibold text-white">{user.name}</p>
                 <p className="text-sm text-neutral-400">@{user.username}</p>
