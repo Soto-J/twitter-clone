@@ -121,6 +121,7 @@ const RegisterModal = () => {
       disabled={isSubmitting}
       body={bodyContent}
       footer={footerContent}
+      resetForm={reset}
     />
   );
 };

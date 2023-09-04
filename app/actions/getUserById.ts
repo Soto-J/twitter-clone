@@ -11,7 +11,7 @@ export default async function getUserById(params: IParams) {
     const user = await prisma.user.findUnique({
       where: { id: userId },
     });
-    
+
     if (!user) {
       return null;
     }
@@ -27,6 +27,6 @@ export default async function getUserById(params: IParams) {
       followersCount,
     };
   } catch (error: any) {
-    throw new Error();
+    console.log(error);
   }
 }

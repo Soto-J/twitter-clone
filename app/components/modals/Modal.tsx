@@ -11,7 +11,7 @@ interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: () => void;
-  resetForm: UseFormReset<FieldValues>;
+  resetForm?: UseFormReset<FieldValues>;
   title: string;
   body?: React.ReactElement;
   footer?: React.ReactElement;
@@ -36,14 +36,14 @@ const Modal = ({
     if (disabled) return;
 
     onClose();
-    resetForm();
+    resetForm?.();
   }, [disabled, onClose, resetForm]);
 
   const handleSubmit = useCallback(() => {
     if (disabled) return;
 
     onSubmit();
-    resetForm();
+    resetForm?.();
   }, [disabled, onSubmit, resetForm]);
 
   if (!isOpen) {
@@ -135,6 +135,7 @@ const Modal = ({
                     fullWidth
                     label="Cancel"
                     onClick={handleClose}
+                    disabled={disabled}
                   />
                 )}
                 <Button
