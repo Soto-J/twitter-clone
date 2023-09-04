@@ -2,6 +2,7 @@
 import { useCallback } from "react";
 import { createPortal } from "react-dom";
 
+import { FieldValues, UseFormReset } from "react-hook-form";
 import { AiOutlineClose } from "react-icons/ai";
 
 import Button from "../Button";
@@ -10,7 +11,7 @@ interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSubmit: () => void;
-  resetForm: () => void;
+  resetForm: UseFormReset<FieldValues>;
   title: string;
   body?: React.ReactElement;
   footer?: React.ReactElement;
@@ -36,14 +37,14 @@ const Modal = ({
 
     onClose();
     resetForm();
-  }, [disabled, onClose]);
+  }, [disabled, onClose, resetForm]);
 
   const handleSubmit = useCallback(() => {
     if (disabled) return;
 
     onSubmit();
     resetForm();
-  }, [disabled, onSubmit]);
+  }, [disabled, onSubmit, resetForm]);
 
   if (!isOpen) {
     return null;
