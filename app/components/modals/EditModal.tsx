@@ -7,9 +7,12 @@ import { useForm, type SubmitHandler, type FieldValues } from "react-hook-form";
 import Modal from "./Modal";
 import Input from "../Input";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 const EditModal = () => {
+  const router = useRouter();
   const editModal = useEditModal();
+
   const {
     register,
     reset,
@@ -20,35 +23,36 @@ const EditModal = () => {
       name: "",
       bio: "",
       username: "",
-      email: "",
       profileImage: "",
       coverImage: "",
     },
   });
 
-  const onEditClick: SubmitHandler<FieldValues> = useCallback(async (data) => {
-    console.log(data);
-    return;
-    try {
-      const response = await fetch("/api/edit", {
-        method: "PATCH",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+  const onEditClick: SubmitHandler<FieldValues> = useCallback(
+    async (data) => {
+      try {
+        const response = await fetch("/api/edit", {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
-      if (!response.ok) {
-        throw new Error("Something went wrong");
+        if (!response.ok) {
+          throw new Error("Something went wrong");
+        }
+
+        toast.success("Profile updated successfully");
+        editModal.onClose();
+        router.refresh();
+        return reset();
+      } catch (error: any) {
+        toast.error(error.message);
       }
-
-      toast.success("Profile updated successfully");
-
-      return reset();
-    } catch (error: any) {
-      toast.error(error.message);
-    }
-  }, []);
+    },
+    [reset, toast, editModal, isSubmitting, handleSubmit, errors, register]
+  );
 
   const bodyContent = (
     <div className="flex flex-col gap-4">
@@ -70,16 +74,23 @@ const EditModal = () => {
         disabled={isSubmitting}
         register={register}
         errors={errors}
-        id="email"
-        label="Email"
+        id="bio"
+        label="Bio"
+      />
+      {/* <Input
+        disabled={isSubmitting}
+        register={register}
+        errors={errors}
+        id="profileImage"
+        label="Profile Image"
       />
       <Input
         disabled={isSubmitting}
         register={register}
         errors={errors}
-        id="bio"
-        label="Bio"
-      />
+        id="coverImage"
+        label="Cover Image"
+      /> */}
     </div>
   );
 
