@@ -1,5 +1,4 @@
 import "./globals.css";
-import { Suspense } from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { getServerSession } from "next-auth";
@@ -14,7 +13,6 @@ import LoginModal from "./components/modals/LoginModal";
 import RegisterModal from "./components/modals/RegisterModal";
 import ToastProvider from "./provider/ToastProvider";
 import EditModal from "./components/modals/EditModal";
-import Loader from "./components/Loader";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,6 +28,7 @@ export default async function RootLayout({
 }) {
   const currentUser = await getCurrentUser();
   const session = await getServerSession();
+  // console.log("session", session);
 
   return (
     <html lang="en">

@@ -8,7 +8,6 @@ export async function POST(request: Request) {
   const currentUser = await getCurrentUser();
   const { id, ...userPreviousData } = currentUser!;
 
-  console.log("HELLO");
   const { name, username, bio, profileImage, coverImage } =
     await request.json();
 

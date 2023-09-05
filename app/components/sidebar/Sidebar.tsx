@@ -41,8 +41,7 @@ const Sidebar = ({ currentUser }: SidebarProps) => {
     signOut();
     router.push("/");
   };
-
-  console.log("CURRENTUSER", currentUser);
+  
   return (
     <div className="col-span-1 h-full pr-6">
       <div className="flex flex-col items-end">
