@@ -15,7 +15,7 @@ export default async function Home() {
       <ClientOnly>
         <Form placeholder="What's happening?" user={currentUser} />
       </ClientOnly>
-      <PostFeed user={null} posts={allPosts} />
+      {currentUser && <PostFeed user={null} posts={allPosts} />}
     </>
   );
 }
