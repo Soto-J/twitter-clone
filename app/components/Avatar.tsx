@@ -7,7 +7,15 @@ import placeholderImg from "../../public/images/placeholder.png";
 import { User } from "@prisma/client";
 
 interface AvatarProps {
-  user: User | null;
+  user?:
+    | {
+        id: string;
+        name: string | null;
+        profileImage: string | null;
+        followersCount: number;
+      }
+    | User
+    | null;
   isLarge?: boolean;
   hasBorder?: boolean;
 }

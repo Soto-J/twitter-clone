@@ -12,12 +12,13 @@ export async function POST(request: Request) {
     }
 
     const currentUser = await getCurrentUser();
-    
+
     const post = await prisma.post.create({
       data: {
         body,
         userId: currentUser!.id,
       },
+      include: { user: true, comments: true },
     });
 
     return NextResponse.json(post);

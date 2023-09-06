@@ -10,7 +10,16 @@ import { useEditModal } from "@/app/hooks/useEditModal";
 import Button from "@/app/components/Button";
 
 interface UserBioProps {
-  user: UserWithfollowingCount;
+  user?: {
+    id: string;
+    name: string | null;
+    username: string | null;
+    bio: string | null;
+    followingIds: string[];
+    createdAt: Date | null;
+    followersCount: number;
+  } | null;
+
   currentUser: User | null;
 }
 

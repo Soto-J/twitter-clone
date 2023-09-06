@@ -37,11 +37,7 @@ const Form = ({ placeholder, postId, isComment, user }: FormProps) => {
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
       const { body } = data;
-
-      if (body.length === 0) {
-        throw new Error("Please enter a message");
-      }
-
+ 
       const response = await axios.post("/api/posts", { body });
 
       if (response.status !== 200) {
