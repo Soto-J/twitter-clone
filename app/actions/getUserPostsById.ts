@@ -1,9 +1,13 @@
 import prisma from "@/libs/prismadb";
 
-export async function getUserPostsById(userId?: string) {
+export interface IParams {
+  userId?: string;
+}
+
+export async function getUserPostsById(params: IParams) {
   try {
     const posts = await prisma.post.findMany({
-      where: { userId },
+      where: params,
       include: { user: true, comments: true },
       orderBy: { createdAt: "desc" },
     });
