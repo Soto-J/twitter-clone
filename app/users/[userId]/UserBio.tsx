@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useState } from "react";
+import { useCallback, useState, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
 
@@ -31,6 +31,11 @@ const UserBio = ({ user, currentUser }: UserBioProps) => {
   const router = useRouter();
   const editModal = useEditModal();
 
+  const isFollowing = useMemo(
+    () => currentUser?.followingIds.includes(user?.id || ""),
+    [currentUser, user]
+  );
+
   const createdAt = () => {
     if (!user?.createdAt) {
       return null;
@@ -46,9 +51,8 @@ const UserBio = ({ user, currentUser }: UserBioProps) => {
   const onFollowClick = useCallback(async () => {
     try {
       setIsLoading(true);
-      const isFollowingUser = currentUser?.followingIds.includes(user!.id);
-
-      const res = isFollowingUser
+      
+      const res = isFollowing
         ? await axios.delete(`/api/follow/${user!.id}`)
         : await axios.post(`/api/follow/${user!.id}`);
 
@@ -75,21 +79,18 @@ const UserBio = ({ user, currentUser }: UserBioProps) => {
       <div className="flex justify-end p-2">
         {user?.id === currentUser?.id ? (
           <Button
-            secondary
             label="Edit"
+            secondary
             onClick={onEditClick}
             disabled={isLoading}
           />
         ) : (
           <Button
-            secondary
+            label={isFollowing ? "Unfollow" : "Follow"}
+            outline={isFollowing}
+            secondary={!isFollowing}
             onClick={onFollowClick}
             disabled={isLoading}
-            label={
-              currentUser?.followingIds.includes(String(user?.id))
-                ? "Unfollow"
-                : "Follow"
-            }
           />
         )}
       </div>

@@ -19,7 +19,6 @@ interface IParams {
 }
 
 const page = async ({ params }: { params: IParams }) => {
-  console.log("params", params);
   const currentUser = await getCurrentUser();
 
   const user = await getUserById(params);
