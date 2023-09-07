@@ -1,9 +1,16 @@
+import { getUserPostsById } from "@/app/actions/getUserPostsById";
 
-
-const page = () => {
-  return (
-    <div>page</div>
-  )
+interface IParams {
+  postId?: string;
 }
 
-export default page
+const page = async ({ params }: { params: IParams }) => {
+  const postId = params.postId;
+  const userPosts = await getUserPostsById(params);
+
+  // console.log("params", params);
+  // console.log("USER POSTS",userPosts);
+  return <div>pagee</div>;
+};
+
+export default page;
