@@ -24,7 +24,6 @@ const page = async ({ params }: { params: IParams }) => {
 
   const user = await getUserById(params);
   const userPosts = await getUserPostsById(params);
-  console.log("user", user);
 
   if (!currentUser) {
     return redirect("/");
@@ -35,7 +34,7 @@ const page = async ({ params }: { params: IParams }) => {
       <Header label={user?.name || ""} showBackArrow />
       <UserHero user={user} />
       <UserBio user={user} currentUser={currentUser} />
-      <PostFeed user={user} posts={userPosts} />
+      <PostFeed posts={userPosts} />
     </div>
   );
 };

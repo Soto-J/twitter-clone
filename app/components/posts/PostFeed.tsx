@@ -2,7 +2,6 @@ import { User, Comment } from "@prisma/client";
 import PostItem from "./PostItem";
 
 interface PostFeedProps {
-  user?: User | null;
   posts?:
     | {
         user: User | null;
@@ -17,7 +16,7 @@ interface PostFeedProps {
     | null;
 }
 
-const PostFeed = async ({ user, posts }: PostFeedProps) => {
+const PostFeed = async ({ posts }: PostFeedProps) => {
   return (
     <>
       {posts?.map((post) => (

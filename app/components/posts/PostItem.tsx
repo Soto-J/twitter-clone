@@ -8,6 +8,8 @@ import { AiOutlineHeart, AiOutlineMessage } from "react-icons/ai";
 import useLoginModal from "@/app/hooks/useLoginModal";
 
 import Avatar from "../Avatar";
+import axios from "axios";
+import { toast } from "react-hot-toast";
 
 interface PostItemProps {
   user?: User | null;
@@ -26,10 +28,10 @@ interface PostItemProps {
 const PostItem = ({ user, post }: PostItemProps) => {
   const router = useRouter();
   const loginModal = useLoginModal();
+
   const goToUser = useCallback(
     (e: MouseEvent<HTMLParagraphElement>) => {
       e.stopPropagation();
-
       router.push(`/users/${post?.userId}`);
     },
     [post, router]
@@ -43,10 +45,27 @@ const PostItem = ({ user, post }: PostItemProps) => {
     [post, router]
   );
 
-  const onLike = useCallback(() => {
-    // e.stopPropogation();
-    loginModal.onOpen();
-  }, [loginModal]);
+  const onLike = useCallback(
+    async (e: MouseEvent<HTMLDivElement>) => {
+      e.stopPropagation();
+      try {
+        const res = await axios.post(`/api/likes/${post.id}`);
+
+        if (res.status !== 200) {
+          throw new Error("Error liking post");
+        }
+
+        toast.success("Post liked!");
+        
+      } catch (error: any) {
+        toast.error(error.message);
+        console.log(error);
+      }
+
+      loginModal.onOpen();
+    },
+    [loginModal]
+  );
 
   const createdAt = useMemo(() => {
     if (!post.createdAt) {
