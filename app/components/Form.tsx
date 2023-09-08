@@ -41,10 +41,10 @@ const Form = ({ placeholder, postId, isComment, user }: FormProps) => {
         : await axios.post("/api/posts", data);
 
       if (response.status !== 200) {
-        throw new Error();
+        throw new Error(isComment ? "Comment not created" : "Post not created");
       }
 
-      toast.success("Post created");
+      toast.success(isComment ? "Comment Created!" : "Post Created!");
       reset();
       router.refresh();
     } catch (error: any) {

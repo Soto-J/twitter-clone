@@ -29,8 +29,6 @@ const PostItem = ({ user, post }: PostItemProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const loginModal = useLoginModal();
-
   const goToUser = useCallback(
     (e: MouseEvent<HTMLParagraphElement>) => {
       e.stopPropagation();

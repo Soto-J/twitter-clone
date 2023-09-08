@@ -2,6 +2,7 @@ import getCurrentUser from "@/app/actions/getCurrentUser";
 import { getPostById } from "@/app/actions/getPostById";
 import Form from "@/app/components/Form";
 import Header from "@/app/components/Header";
+import CommentFeed from "@/app/components/posts/CommentFeed";
 import PostItem from "@/app/components/posts/PostItem";
 
 interface IParams {
@@ -23,6 +24,7 @@ const page = async ({ params }: { params: IParams }) => {
         postId={postId}
         user={currentUser}
       />
+      <CommentFeed />
     </>
   );
 };

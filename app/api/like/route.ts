@@ -6,7 +6,6 @@ export async function POST(request: Request) {
   try {
     const res = await request.json();
     const { postId, userId } = res.data;
-    console.log("HELLO POST");
     const post = await getPostById({ postId });
 
     if (!post) {

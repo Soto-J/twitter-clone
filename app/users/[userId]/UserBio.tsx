@@ -51,13 +51,14 @@ const UserBio = ({ user, currentUser }: UserBioProps) => {
   const onFollowClick = useCallback(async () => {
     try {
       setIsLoading(true);
-      
       const res = isFollowing
         ? await axios.delete(`/api/follow/${user!.id}`)
         : await axios.post(`/api/follow/${user!.id}`);
 
       if (res.status !== 200) {
-        throw new Error("Something went wrong");
+        throw new Error(
+          isFollowing ? "Error Unfolling User" : "Error Following User"
+        );
       }
 
       const toastMessage = res.data.followingIds.includes(user!.id)
@@ -72,7 +73,7 @@ const UserBio = ({ user, currentUser }: UserBioProps) => {
     } finally {
       setIsLoading(false);
     }
-  }, [user, toast, axios, router, currentUser, setIsLoading]);
+  }, [user, toast, axios, router, currentUser, setIsLoading, isFollowing]);
 
   return (
     <div className="border-b border-neutral-800 pb-4">

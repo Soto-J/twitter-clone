@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/libs/prismadb";
 import { getPostById } from "@/app/actions/getPostById";
+import getCurrentUser from "@/app/actions/getCurrentUser";
 
 interface IParams {
   postId: string;
@@ -8,32 +9,33 @@ interface IParams {
 
 export async function POST(request: Request, { params }: { params: IParams }) {
   try {
-    const { data } = await request.json();
-    console.log("data:", data);
-    console.log("params:", params);
-    // get post by id
+    const data = await request.json();
+    const { body } = data;
+
     const post = await getPostById(params);
+    const currentUser = await getCurrentUser();
 
-    // // Create a new comment
-    // const comment = await prisma.comment.create({
-    //   data: data,
-    // });
+    if (!currentUser) {
+      throw new Error("User not found");
+    }
 
-    // const updatedComments = [comment, ...(post?.comments || [])].map(
-    //   (comment) => ({ id: comment.id })
-    // );
+    if (!post) {
+      throw new Error("Post not found");
+    }
 
-    // // update post with comment
-    // const updatedPost = await prisma.post.update({
-    //   where: { id: params.postId },
-    //   data: {
-    //     comments: {
-    //       connect: updatedComments,
-    //     },
-    //   },
-    // });
+    const comment = await prisma.comment.create({
+      data: {
+        body,
+        userId: currentUser.id,
+        postId: post.id,
+      },
+    });
 
-    return NextResponse.json("");
+    if (!comment) {
+      throw new Error("Comment not created");
+    }
+
+    return NextResponse.json(comment);
   } catch (error: any) {
     return NextResponse.json({ error: error.message });
   }
