@@ -1,5 +1,6 @@
 import { User, Comment } from "@prisma/client";
 import PostItem from "./PostItem";
+import getCurrentUser from "@/app/actions/getCurrentUser";
 
 interface PostFeedProps {
   posts?:
@@ -17,10 +18,12 @@ interface PostFeedProps {
 }
 
 const PostFeed = async ({ posts }: PostFeedProps) => {
+  const currentUser = await getCurrentUser();
+
   return (
     <>
       {posts?.map((post) => (
-        <PostItem key={post.id} post={post} />
+        <PostItem key={post.id} user={currentUser} post={post} />
       ))}
     </>
   );

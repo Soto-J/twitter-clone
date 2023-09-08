@@ -36,9 +36,9 @@ const Form = ({ placeholder, postId, isComment, user }: FormProps) => {
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
-      const { body } = data;
- 
-      const response = await axios.post("/api/posts", { body });
+      const response = isComment
+        ? await axios.post(`/api/posts/${postId}/comment`, data)
+        : await axios.post("/api/posts", data);
 
       if (response.status !== 200) {
         throw new Error();

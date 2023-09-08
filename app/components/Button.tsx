@@ -27,7 +27,7 @@ const Button = ({
         font-semibold
         transition
         hover:opacity-80
-        disabled:cursor-wait
+        disabled:cursor-not-allowed
         disabled:opacity-70
         ${fullWidth ? "w-full" : "max-w-fit"}
         ${secondary ? "border-black" : "border-sky-500"}

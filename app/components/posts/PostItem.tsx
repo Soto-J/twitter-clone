@@ -14,15 +14,15 @@ import { toast } from "react-hot-toast";
 interface PostItemProps {
   user?: User | null;
   post: {
-    user?: User | null;
-    id: string | null;
+    user: User | null;
+    id: string;
     body: string | null;
     createdAt: Date | null;
     updatedAt: Date | null;
     likedIds: string[] | null;
     userId: string | null;
     comments: Comment[];
-  };
+  } | null;
 }
 
 const PostItem = ({ user, post }: PostItemProps) => {
@@ -40,7 +40,7 @@ const PostItem = ({ user, post }: PostItemProps) => {
   const goToPost = useCallback(
     (e: MouseEvent<HTMLDivElement>) => {
       e.stopPropagation();
-      router.push(`/posts/${post.id}`);
+      router.push(`/posts/${post?.id}`);
     },
     [post, router]
   );
@@ -48,27 +48,38 @@ const PostItem = ({ user, post }: PostItemProps) => {
   const onLike = useCallback(
     async (e: MouseEvent<HTMLDivElement>) => {
       e.stopPropagation();
+
       try {
-        const res = await axios.post(`/api/likes/${post.id}`);
+        const isLiked = user && post && post.likedIds?.includes(user.id);
+        console.log("isLIked:", isLiked);
+        const res = isLiked
+          ? await axios.delete(`/api/like/`, {
+              data: { userId: user.id, postId: post?.id },
+            })
+          : await axios.post(`/api/like/`, {
+              data: { postId: post?.id, userId: user?.id },
+            });
 
         if (res.status !== 200) {
-          throw new Error("Error liking post");
+          const errorMessage = isLiked
+            ? "Error unliking post"
+            : "Error liking post";
+          throw new Error(errorMessage);
         }
 
-        toast.success("Post liked!");
-        
+        const successMessage = isLiked ? "Post unliked" : "Post liked";
+        router.refresh();
+        toast.success(successMessage);
       } catch (error: any) {
         toast.error(error.message);
         console.log(error);
       }
-
-      loginModal.onOpen();
     },
-    [loginModal]
+    [post, user]
   );
 
   const createdAt = useMemo(() => {
-    if (!post.createdAt) {
+    if (!post?.createdAt) {
       return null;
     }
 
@@ -88,7 +99,7 @@ const PostItem = ({ user, post }: PostItemProps) => {
       "
     >
       <div className="flex items-start gap-3">
-        <Avatar user={post.user} />
+        <Avatar user={post?.user} />
         <div>
           <div className="flex items-center gap-2">
             <p
@@ -100,7 +111,7 @@ const PostItem = ({ user, post }: PostItemProps) => {
                 hover:underline
               "
             >
-              {post.user?.name}
+              {post?.user?.name}
             </p>
             <span
               onClick={goToUser}
@@ -112,12 +123,12 @@ const PostItem = ({ user, post }: PostItemProps) => {
                 md:block
               "
             >
-              @{post.user?.username}
+              @{post?.user?.username}
             </span>
             <span className="text-sm text-neutral-500">{createdAt}</span>
           </div>
 
-          <p className="mt-1 text-white">{post.body}</p>
+          <p className="mt-1 text-white">{post?.body}</p>
 
           <div className="mt-3 flex items-center gap-10">
             <div
@@ -132,7 +143,7 @@ const PostItem = ({ user, post }: PostItemProps) => {
               "
             >
               <AiOutlineMessage size={20} />
-              <p>{post.comments?.length || 0}</p>
+              <p>{post?.comments?.length || 0}</p>
             </div>
             <div
               onClick={onLike}
@@ -147,7 +158,7 @@ const PostItem = ({ user, post }: PostItemProps) => {
               "
             >
               <AiOutlineHeart size={20} />
-              <p>{post.likedIds?.length || 0}</p>
+              <p>{post?.likedIds?.length || 0}</p>
             </div>
           </div>
         </div>

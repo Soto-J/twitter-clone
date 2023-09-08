@@ -23,7 +23,6 @@ const page = async ({ params }: { params: IParams }) => {
 
   const user = await getUserById(params);
   const userPosts = await getUserPostsById(params);
-  // console.log("USER POSTS", userPosts);
 
   if (!currentUser) {
     return redirect("/");
