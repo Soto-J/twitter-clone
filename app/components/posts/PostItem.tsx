@@ -1,10 +1,10 @@
 "use client";
-import { useCallback, useMemo, type MouseEvent } from "react";
+import { useCallback, useMemo, type MouseEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import type { Comment, User } from "@prisma/client";
 import { formatDistanceToNowStrict } from "date-fns";
-import { AiOutlineHeart, AiOutlineMessage } from "react-icons/ai";
+import { AiFillHeart, AiOutlineHeart, AiOutlineMessage } from "react-icons/ai";
 import useLoginModal from "@/app/hooks/useLoginModal";
 
 import Avatar from "../Avatar";
@@ -26,7 +26,9 @@ interface PostItemProps {
 }
 
 const PostItem = ({ user, post }: PostItemProps) => {
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+
   const loginModal = useLoginModal();
 
   const goToUser = useCallback(
@@ -45,34 +47,39 @@ const PostItem = ({ user, post }: PostItemProps) => {
     [post, router]
   );
 
+  const isLiked = useMemo(
+    () => user && post && post.likedIds?.includes(user.id),
+    [user, post]
+  );
+
   const onLike = useCallback(
     async (e: MouseEvent<HTMLDivElement>) => {
       e.stopPropagation();
 
       try {
-        const isLiked = user && post && post.likedIds?.includes(user.id);
-        console.log("isLIked:", isLiked);
+        setIsLoading(true);
+
         const res = isLiked
           ? await axios.delete(`/api/like/`, {
-              data: { userId: user.id, postId: post?.id },
+              data: { userId: user?.id, postId: post?.id },
             })
           : await axios.post(`/api/like/`, {
               data: { postId: post?.id, userId: user?.id },
             });
 
         if (res.status !== 200) {
-          const errorMessage = isLiked
-            ? "Error unliking post"
-            : "Error liking post";
-          throw new Error(errorMessage);
+          throw new Error(
+            isLiked ? "Error unliking post" : "Error liking post"
+          );
         }
 
-        const successMessage = isLiked ? "Post unliked" : "Post liked";
         router.refresh();
-        toast.success(successMessage);
+        toast.success(isLiked ? "Post unliked" : "Post liked");
       } catch (error: any) {
         toast.error(error.message);
         console.log(error);
+      } finally {
+        setIsLoading(false);
       }
     },
     [post, user]
@@ -147,7 +154,7 @@ const PostItem = ({ user, post }: PostItemProps) => {
             </div>
             <div
               onClick={onLike}
-              className="
+              className={`
                 flex
                 cursor-pointer
                 items-center
@@ -155,9 +162,14 @@ const PostItem = ({ user, post }: PostItemProps) => {
                 text-neutral-500
                 transition
                 hover:text-red-500
-              "
+                ${isLoading ? "cursor-not-allowed" : "cursor-pointer"}
+              `}
             >
-              <AiOutlineHeart size={20} />
+              {isLiked ? (
+                <AiFillHeart size={20} />
+              ) : (
+                <AiOutlineHeart size={20} />
+              )}
               <p>{post?.likedIds?.length || 0}</p>
             </div>
           </div>
