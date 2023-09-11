@@ -1,8 +1,9 @@
+import { getCommentsFromPost } from "@/app/actions/getCommentsFromPost";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import { getPostById } from "@/app/actions/getPostById";
 import Form from "@/app/components/Form";
 import Header from "@/app/components/Header";
-import CommentFeed from "@/app/components/posts/CommentFeed";
+import CommentFeed from "@/app/components/posts/comment/CommentFeed";
 import PostItem from "@/app/components/posts/PostItem";
 
 interface IParams {
@@ -11,8 +12,9 @@ interface IParams {
 
 const page = async ({ params }: { params: IParams }) => {
   const { postId } = params;
-  const post = await getPostById({ postId });
   const currentUser = await getCurrentUser();
+  const post = await getPostById({ postId });
+  const commentsFromPost = await getCommentsFromPost({ postId });
 
   return (
     <>
@@ -24,7 +26,7 @@ const page = async ({ params }: { params: IParams }) => {
         postId={postId}
         user={currentUser}
       />
-      <CommentFeed />
+      <CommentFeed comments={commentsFromPost} />
     </>
   );
 };
