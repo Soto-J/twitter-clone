@@ -1,10 +1,5 @@
-import getUserById from "@/app/actions/getUserById";
 import CommentItem from "./CommentItem";
-import {
-  CommentWithUser,
-  getCommentsFromPost,
-} from "@/app/actions/getCommentsFromPost";
-import { Comment, User } from "@prisma/client";
+import { CommentWithUser } from "@/app/actions/getCommentsFromPost";
 
 interface CommentFeedProps {
   comments: CommentWithUser[] | null;

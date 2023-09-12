@@ -1,9 +1,10 @@
-import { getCommentsFromPost } from "@/app/actions/getCommentsFromPost";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import { getPostById } from "@/app/actions/getPostById";
+import { getCommentsFromPost } from "@/app/actions/getCommentsFromPost";
+
 import Form from "@/app/components/Form";
 import Header from "@/app/components/Header";
-import CommentFeed from "@/app/components/posts/comment/CommentFeed";
+import CommentFeed from "@/app/components/comment/CommentFeed";
 import PostItem from "@/app/components/posts/PostItem";
 
 interface IParams {

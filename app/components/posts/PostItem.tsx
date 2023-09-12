@@ -2,7 +2,7 @@
 import { useCallback, useMemo, type MouseEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import type { Comment, User } from "@prisma/client";
+import type { Comment, Post, User } from "@prisma/client";
 import { formatDistanceToNowStrict } from "date-fns";
 import { AiFillHeart, AiOutlineHeart, AiOutlineMessage } from "react-icons/ai";
 import useLoginModal from "@/app/hooks/useLoginModal";
@@ -10,19 +10,11 @@ import useLoginModal from "@/app/hooks/useLoginModal";
 import Avatar from "../Avatar";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import { PostWithUserAndComments } from "@/app/actions/getAllPosts";
 
 interface PostItemProps {
   user?: User | null;
-  post: {
-    user: User | null;
-    id: string;
-    body: string | null;
-    createdAt: Date | null;
-    updatedAt: Date | null;
-    likedIds: string[] | null;
-    userId: string | null;
-    comments: Comment[];
-  } | null;
+  post: PostWithUserAndComments | null;
 }
 
 const PostItem = ({ user, post }: PostItemProps) => {
@@ -46,7 +38,7 @@ const PostItem = ({ user, post }: PostItemProps) => {
   );
 
   const isLiked = useMemo(
-    () => user && post && post.likedIds?.includes(user.id),
+    () => user && post && post.likedIds.includes(user.id),
     [user, post]
   );
 
