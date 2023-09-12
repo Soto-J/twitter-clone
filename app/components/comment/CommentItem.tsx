@@ -17,6 +17,7 @@ const CommentItem = ({ comment }: CommentItemProps) => {
   const goToUser = useCallback(
     (e: MouseEvent<HTMLParagraphElement>) => {
       e.stopPropagation();
+
       router.push(`/users/${comment.userId}`);
     },
     [comment, router]
@@ -31,7 +32,6 @@ const CommentItem = ({ comment }: CommentItemProps) => {
   return (
     <div
       className="
-        cursor-pointer
         border-b
         border-neutral-800
         p-5
@@ -56,7 +56,7 @@ const CommentItem = ({ comment }: CommentItemProps) => {
             </p>
             <span
               className="
-                hidden 
+                hidden
                 cursor-pointer 
                 text-neutral-500 
                 hover:underline 
