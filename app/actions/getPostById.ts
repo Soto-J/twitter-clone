@@ -1,4 +1,5 @@
 import prisma from "@/libs/prismadb";
+import { Prisma } from "@prisma/client";
 
 interface IParams {
   postId?: string;

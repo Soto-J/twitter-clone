@@ -1,8 +1,15 @@
 import prisma from "@/libs/prismadb";
+import { Prisma } from "@prisma/client";
 
 interface IParams {
   postId?: string;
 }
+
+const commentWithUser = Prisma.validator<Prisma.CommentDefaultArgs>()({
+  include: { user: true },
+});
+
+export type CommentWithUser = Prisma.CommentGetPayload<typeof commentWithUser>;
 
 export async function getCommentsFromPost(params: IParams) {
   try {

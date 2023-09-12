@@ -14,7 +14,7 @@ const page = async ({ params }: { params: IParams }) => {
   const { postId } = params;
   const currentUser = await getCurrentUser();
   const post = await getPostById({ postId });
-  const commentsFromPost = await getCommentsFromPost({ postId });
+  const postComments = await getCommentsFromPost({ postId });
 
   return (
     <>
@@ -26,7 +26,7 @@ const page = async ({ params }: { params: IParams }) => {
         postId={postId}
         user={currentUser}
       />
-      <CommentFeed comments={commentsFromPost} />
+      <CommentFeed comments={postComments} />
     </>
   );
 };
