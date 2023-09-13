@@ -4,17 +4,25 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 import { IconType } from "react-icons";
+import { BsDot } from "react-icons/bs";
 
 import useLoginModal from "@/app/hooks/useLoginModal";
 
 interface SidebarItemProps {
   href?: string;
   label: string;
+  alert?: boolean | null;
   icon: IconType;
   logOut?: () => void;
 }
 
-const SidebarItem = ({ href, label, icon: Icon, logOut }: SidebarItemProps) => {
+const SidebarItem = ({
+  href,
+  label,
+  alert,
+  icon: Icon,
+  logOut,
+}: SidebarItemProps) => {
   const router = useRouter();
   const loginModal = useLoginModal();
   const session = useSession();
@@ -43,21 +51,28 @@ const SidebarItem = ({ href, label, icon: Icon, logOut }: SidebarItemProps) => {
           h-14
           w-14
           cursor-pointer
-          items-center
-          justify-center
           rounded-full
           p-4
           hover:bg-slate-300
           hover:bg-opacity-10
-          lg:hidden
+
+          lg:flex
+          lg:h-auto
+          lg:w-auto
+          lg:items-center
+          lg:gap-4
         "
       >
-        <Icon size={28} color="white" />
-        <p className="lg:text-xl lg:text-white">{label}</p>
+        <Icon size={24} color="white" className="lg:h-8 lg:w-8" />
+        <p className="hidden text-xl text-white lg:block">{label}</p>
+
+        {alert && (
+          <BsDot size={70} className="absolute -top-4 left-0 text-sky-500" />
+        )}
       </div>
 
       {/* Desktop */}
-      <div
+      {/* <div
         onClick={onClickHandler}
         className="
           hidden
@@ -74,7 +89,7 @@ const SidebarItem = ({ href, label, icon: Icon, logOut }: SidebarItemProps) => {
       >
         <Icon size={24} color="white" />
         <p className="lg:text-xl lg:text-white">{label}</p>
-      </div>
+      </div> */}
     </div>
   );
 };

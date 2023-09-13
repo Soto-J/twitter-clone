@@ -1,24 +1,27 @@
 "use client";
-import { signOut } from "next-auth/react";
+import { NextPageContext } from "next";
+import { getSession, signOut, useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 import { BsBellFill, BsHouseFill } from "react-icons/bs";
 import { FaUser } from "react-icons/fa";
 import { BiLogOut } from "react-icons/bi";
-import { SafeUser } from "@/app/types";
 import { User } from "@prisma/client";
 
 import SidebarLogo from "./SidebarLogo";
 import SidebarItem from "./SidebarItem";
 import SidebarTweetButton from "./SidebarTweetButton";
-import { useRouter } from "next/navigation";
 
 interface SidebarProps {
   currentUser: User | null;
 }
 
+
+
 const Sidebar = ({ currentUser }: SidebarProps) => {
   const router = useRouter();
-
+  const session = useSession();
+  console.log(session);
   const items = [
     {
       label: "Home",
@@ -29,6 +32,7 @@ const Sidebar = ({ currentUser }: SidebarProps) => {
       label: "Notifications",
       href: "/notifications",
       icon: BsBellFill,
+      alert: currentUser?.hasNotification,
     },
     {
       label: "Profile",
@@ -41,7 +45,7 @@ const Sidebar = ({ currentUser }: SidebarProps) => {
     signOut();
     router.push("/");
   };
-  
+
   return (
     <div className="col-span-1 h-full pr-6">
       <div className="flex flex-col items-end">
@@ -53,6 +57,7 @@ const Sidebar = ({ currentUser }: SidebarProps) => {
               href={item.href}
               label={item.label}
               icon={item.icon}
+              alert={item.alert}
             />
           ))}
 
