@@ -14,6 +14,10 @@ export async function getPostById(params: IParams) {
       include: { user: true, comments: true },
     });
 
+    if (!post) {
+      throw new Error("Post not found");
+    }
+
     return post;
   } catch (error) {
     return null;
