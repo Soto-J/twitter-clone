@@ -1,20 +1,10 @@
-import { User, Comment } from "@prisma/client";
-import PostItem from "./PostItem";
 import getCurrentUser from "@/app/actions/getCurrentUser";
+import { PostWithUserAndComments } from "@/app/actions/getAllPosts";
+
+import PostItem from "./PostItem";
 
 interface PostFeedProps {
-  posts?:
-    | {
-        user: User | null;
-        id: string;
-        body: string | null;
-        createdAt: Date | null;
-        updatedAt: Date | null;
-        likedIds: string[] | null;
-        userId: string | null;
-        comments: Comment[];
-      }[]
-    | null;
+  posts: PostWithUserAndComments[] | null;
 }
 
 const PostFeed = async ({ posts }: PostFeedProps) => {
