@@ -36,6 +36,7 @@ const ImageUpload = ({
 
       const file = acceptedFiles[0];
       const reader = new FileReader();
+      
       reader.onload = (e: any) => {
         onChange(e.target.result);
       };

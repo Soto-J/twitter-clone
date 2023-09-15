@@ -1,6 +1,5 @@
 "use client";
-import { NextPageContext } from "next";
-import { getSession, signOut, useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 import { BsBellFill, BsHouseFill } from "react-icons/bs";
@@ -16,12 +15,10 @@ interface SidebarProps {
   currentUser: User | null;
 }
 
-
-
 const Sidebar = ({ currentUser }: SidebarProps) => {
   const router = useRouter();
   const session = useSession();
-  console.log(session);
+
   const items = [
     {
       label: "Home",

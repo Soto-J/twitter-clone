@@ -4,15 +4,7 @@ import Image from "next/image";
 import React from "react";
 
 interface UserHeroProps {
-  user?: {
-    id: string;
-    name: string | null;
-    profileImage: string | null;
-    coverImage: string | null;
-    username: string | null;
-    bio: string | null;
-    followingIds: string[];
-    createdAt: Date | null;
+  user?: User & {
     followersCount: number;
   } | null;
 }

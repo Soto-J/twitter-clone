@@ -1,5 +1,5 @@
 "use client";
-import { useCallback } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
@@ -26,6 +26,10 @@ const SidebarItem = ({
   const router = useRouter();
   const loginModal = useLoginModal();
   const session = useSession();
+  
+  useEffect(() => {
+    router.refresh();
+  }, [router]);
 
   const onClickHandler = useCallback(() => {
     if (logOut) {
@@ -43,7 +47,6 @@ const SidebarItem = ({
 
   return (
     <div className="flex items-center">
-      {/* Mobile */}
       <div
         onClick={onClickHandler}
         className="
@@ -70,26 +73,6 @@ const SidebarItem = ({
           <BsDot size={70} className="absolute -top-4 left-0 text-sky-500" />
         )}
       </div>
-
-      {/* Desktop */}
-      {/* <div
-        onClick={onClickHandler}
-        className="
-          hidden
-          lg:relative
-          lg:flex
-          lg:cursor-pointer
-          lg:items-center
-          lg:gap-4
-          lg:rounded-full
-          lg:p-4
-          lg:hover:bg-slate-300
-          lg:hover:bg-opacity-10
-        "
-      >
-        <Icon size={24} color="white" />
-        <p className="lg:text-xl lg:text-white">{label}</p>
-      </div> */}
     </div>
   );
 };

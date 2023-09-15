@@ -61,7 +61,7 @@ const UserBio = ({ user, currentUser }: UserBioProps) => {
         );
       }
 
-      const toastMessage = res.data.followingIds.includes(user!.id)
+      const toastMessage = res.data.followingIds.includes(user?.id)
         ? "User Successfully Followed!"
         : "User Unfollowed!";
 

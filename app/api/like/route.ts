@@ -18,7 +18,7 @@ export async function POST(request: Request) {
       throw new Error("Already liked");
     }
 
-    // Create notification && Update user with notification
+    // Create notification && Update User.hasNotification
     if (post.userId) {
       await prisma.notification.create({
         data: {
