@@ -19,9 +19,21 @@ export async function POST(request: Request, { params }: { params: IParams }) {
       throw new Error("User not found");
     }
 
-    if (!post) {
+    if (!post?.userId) {
       throw new Error("Post not found");
     }
+
+    await prisma.notification.create({
+      data: {
+        userId: post.userId,
+        body: `${currentUser.username} commented on your post`,
+      },
+    });
+
+    await prisma.user.update({
+      where: { id: post.userId },
+      data: { hasNotification: true },
+    });
 
     const comment = await prisma.comment.create({
       data: {
@@ -30,10 +42,6 @@ export async function POST(request: Request, { params }: { params: IParams }) {
         postId: post.id,
       },
     });
-
-    if (!comment) {
-      throw new Error("Comment not created");
-    }
 
     return NextResponse.json(comment);
   } catch (error: any) {

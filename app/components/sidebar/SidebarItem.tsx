@@ -26,10 +26,6 @@ const SidebarItem = ({
   const router = useRouter();
   const loginModal = useLoginModal();
   const session = useSession();
-  
-  useEffect(() => {
-    router.refresh();
-  }, [router]);
 
   const onClickHandler = useCallback(() => {
     if (logOut) {

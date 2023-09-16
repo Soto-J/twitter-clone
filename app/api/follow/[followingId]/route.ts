@@ -27,6 +27,18 @@ export async function POST(request: Request, { params }: { params: IParams }) {
       throw new Error("User not found");
     }
 
+    await prisma.notification.create({
+      data: {
+        userId: followingId,
+        body: `${currentUser?.username} followed you`,
+      },
+    });
+
+    await prisma.user.update({
+      where: { id: followingId },
+      data: { hasNotification: true },
+    });
+
     const updatedfollowingIds = [...currentUser.followingIds, followingId];
 
     const updatedUser = await prisma.user.update({
